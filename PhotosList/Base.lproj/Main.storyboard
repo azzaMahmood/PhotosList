@@ -30,15 +30,18 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="mwl-8p-Q8I" secondAttribute="bottom" id="xoT-i6-4N2"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="photosTableView" destination="mwl-8p-Q8I" id="CNP-sj-jf7"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="35" y="78"/>
         </scene>
-        <!--View Controller-->
+        <!--Photo Details View Controller-->
         <scene sceneID="Gfp-Dl-YZr">
             <objects>
-                <viewController id="hoK-YC-VOA" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PhotoDetailsViewController" id="hoK-YC-VOA" customClass="PhotoDetailsViewController" customModule="PhotosList" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Q1w-Fb-Teb">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -70,8 +73,8 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="photoImageView" destination="9b8-NO-GGk" id="IfA-zj-acn"/>
-                        <outlet property="scrollView" destination="yt8-sc-bHU" id="DMJ-5h-TFH"/>
+                        <outlet property="photoImageView" destination="9b8-NO-GGk" id="dTe-Em-kWF"/>
+                        <outlet property="scrollView" destination="yt8-sc-bHU" id="bzk-y3-D8R"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="o7p-ru-Com" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

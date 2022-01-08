@@ -8,7 +8,9 @@
 import UIKit
 
 class AdPlaceholderCell: UITableViewCell {
-
+    
+    @IBOutlet weak var adPlaceholderImage: UIImageView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
