@@ -1,5 +1,5 @@
 //
-//  PhotosViewController.swift
+//  PhotosListViewController.swift
 //  PhotosList
 //
 //  Created by Azza on 07/01/2022.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PhotosViewController: UIViewController {
+class PhotosListViewController: UIViewController {
 
     @IBOutlet weak var photosTableView: UITableView!
     
