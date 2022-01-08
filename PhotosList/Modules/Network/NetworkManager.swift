@@ -33,6 +33,7 @@ class NetworkManager: NetworkManagerProtocol {
                 case .success(let responseDate):
                     do {
                         let model: ResponseType =  try JSONDecoder().decode(decodingType.self, from: responseDate)
+                        print("========\(model)")
                         responseSubject.onNext(model)
                     } catch {
                         responseSubject.onError(NetworkFailure.failedToParseData)
