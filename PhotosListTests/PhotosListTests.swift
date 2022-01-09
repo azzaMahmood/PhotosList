@@ -6,27 +6,37 @@
 //
 
 import XCTest
+@testable import PhotosList
+import RxSwift
+import RxCocoa
 
 class PhotosListTests: XCTestCase {
-
+    
+    var viewModel: PhotosListViewModel!
+    var disposeBag: DisposeBag!
+    
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        viewModel = PhotosListViewModel(photoListApi: MockPhotoListApi.shared)
+        disposeBag = DisposeBag()
     }
 
     override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        viewModel = nil
+        disposeBag = nil
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        measure {
-            // Put the code you want to measure the time of here.
+    func testLoadDataOnline() {
+        viewModel.fetchData()
+        let expectation = expectation(description: "Wait for loading photos")
+        viewModel.photosListSubject.subscribe(onNext: { photos in
+            expectation.fulfill()
+            XCTAssertEqual(photos.count, 10, "Photos count should equal 10" )
+        }).disposed(by: disposeBag)
+        
+        waitForExpectations(timeout: 5) { (error) in
+            if error != nil {
+                XCTFail("Expectation not fulfilled")
+            }
         }
     }
-
 }
