@@ -15,6 +15,7 @@ the selected photo.
 ## Structure of the Project
 - For the architecture of the app I used MVVM with RxSwift.
 - This project has a layer of Network that handels the requests to Marvel API.
+- Use Swift Package Dependencies (Alamofire - KingFisher - RxSwift)
 
 ## Some things I'd like to add to the app
 
