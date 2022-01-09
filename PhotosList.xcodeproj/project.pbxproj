@@ -162,9 +162,9 @@
 			children = (
 				47557C5B2789F12700CFA902 /* Cells */,
 				478888752788A4300029C64C /* PhotosListViewController.swift */,
+				47557C7E278A192900CFA902 /* PhotosListViewModel.swift */,
 				47557C6A2789FA6B00CFA902 /* PhotosListModel.swift */,
 				47557C7C278A132000CFA902 /* PhotosApi.swift */,
-				47557C7E278A192900CFA902 /* PhotosListViewModel.swift */,
 			);
 			path = PhotosList;
 			sourceTree = "<group>";

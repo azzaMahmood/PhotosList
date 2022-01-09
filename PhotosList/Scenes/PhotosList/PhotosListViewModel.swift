@@ -18,7 +18,7 @@ final class PhotosListViewModel {
     private let photoListApi: NetworkManagerProtocol
 
     // MARK: - Observers
-    var photossList: Observable<[Photo]> {
+    var photosList: Observable<[Photo]> {
         return photosListSubject.asObservable()
     }
     var showLoader = PublishSubject<Bool>()

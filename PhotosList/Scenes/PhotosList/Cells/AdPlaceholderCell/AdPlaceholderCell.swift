@@ -11,15 +11,18 @@ class AdPlaceholderCell: UITableViewCell {
     
     @IBOutlet weak var adPlaceholderImage: UIImageView!
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    static var reuseIdentifier: String {
+        return String.init(describing: self)
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
+    static var nib: UINib {
+        return UINib.init(nibName: String.init(describing: self), bundle: nil)
+    }
 
-        // Configure the view for the selected state
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        selectionStyle = .none
+        adPlaceholderImage.image = UIImage(named: "AdPlaceHolder")
     }
     
 }
