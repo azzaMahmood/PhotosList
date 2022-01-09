@@ -28,7 +28,7 @@ the selected photo.
 ## App preview
 
 
-<img src="https://user-images.githubusercontent.com/38253345/148703520-e69c5b26-e3c8-4a0d-9b4f-23abd157dd86.png" width="200"> <img src="https://user-images.githubusercontent.com/38253345/148703591-26cc9aad-c07a-4ab8-8036-d2256c9092e1.png" width="200">
-<img src="https://user-images.githubusercontent.com/38253345/148703562-d360f202-2027-4254-b39a-c147d6329f7b.png" width="200">
+<img src="https://user-images.githubusercontent.com/38253345/148703520-e69c5b26-e3c8-4a0d-9b4f-23abd157dd86.png" width="200">   <img src="https://user-images.githubusercontent.com/38253345/148703562-d360f202-2027-4254-b39a-c147d6329f7b.png" width="200">
+<img src="https://user-images.githubusercontent.com/38253345/148703929-e55a79ab-faf4-4a53-bd34-ff1861a69d46.png" width="200">
 <img src="https://user-images.githubusercontent.com/38253345/148703676-02afa9cb-0db9-4cbf-baae-c1df51d37d18.png" width="200">
 
