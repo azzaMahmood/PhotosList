@@ -34,6 +34,12 @@ class PhotosListViewController: UIViewController, UIScrollViewDelegate {
         photosTableView.rx
             .setDelegate(self)
             .disposed(by: bag)
+        
+        photosTableView.rx.itemSelected
+            .subscribe(onNext: { [weak self] index in
+                guard let self = self, ((index.row + 1) % 6 != 0) else { return }
+                self.navigateToPhotoDetails(index: index.row)
+            }).disposed(by: bag)
 
     }
     
@@ -53,6 +59,14 @@ class PhotosListViewController: UIViewController, UIScrollViewDelegate {
             }.disposed(by: bag)
         
     }
-
+    
+    private func navigateToPhotoDetails(index: Int) {
+        guard let viewController = self.storyboard?.instantiateViewController(identifier: "PhotoDetailsViewController") as? PhotoDetailsViewController else { return }
+        let photoDetailsViewInfo = viewModel.getPhotoDetailsViewInfo(at: index)
+        let detailViewModel = PhotoDetailsViewModel(photoDetailsViewInfo: photoDetailsViewInfo)
+        viewController.viewModel = detailViewModel
+        self.navigationController?.pushViewController(viewController, animated: true)
+    }
+    
 }
 

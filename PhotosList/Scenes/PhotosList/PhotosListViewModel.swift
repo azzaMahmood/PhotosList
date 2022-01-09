@@ -47,4 +47,12 @@ final class PhotosListViewModel {
             }).disposed(by: disposeBag)
     }
 
+    
+    func getPhotoDetailsViewInfo(at index: Int) -> PhotoDetailsViewInfo {
+        let photos = photosListSubject.value
+        guard photos.isEmpty else { return .init(authorName: "", photoImageURL: nil) }
+        let photo = photos[index]
+        return PhotoDetailsViewInfo(authorName: photo.author, photoImageURL: URL(string: photo.downloadURL))
+    }
+
 }

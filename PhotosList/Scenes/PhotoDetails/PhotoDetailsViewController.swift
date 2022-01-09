@@ -12,6 +12,8 @@ class PhotoDetailsViewController: UIViewController {
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var photoImageView: UIImageView!
     
+    var viewModel = PhotoDetailsViewModel(photoDetailsViewInfo: .init(authorName: "", photoImageURL: nil))
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
