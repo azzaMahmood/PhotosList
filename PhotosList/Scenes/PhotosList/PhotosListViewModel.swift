@@ -40,7 +40,7 @@ final class PhotosListViewModel {
                 var items = try? self.photosListSubject.value
                 items?.append(contentsOf: value)
                 self.page.currentPage += 1
-                self.page.fetchedItemsCount += items?.count ?? 0
+                self.page.fetchedItemsCount += value.count
                 self.photosListSubject.accept(items ?? [])
             }, onError: { [weak self] err in
                 guard let self = self else { return }
