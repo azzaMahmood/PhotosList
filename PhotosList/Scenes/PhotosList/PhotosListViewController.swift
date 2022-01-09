@@ -27,6 +27,7 @@ class PhotosListViewController: UIViewController, UIScrollViewDelegate {
         photosTableView.register(PhotoTableViewCell.nib, forCellReuseIdentifier: PhotoTableViewCell.reuseIdentifier)
         photosTableView.register(AdPlaceholderCell.nib, forCellReuseIdentifier: AdPlaceholderCell.reuseIdentifier)
         photosTableView.rowHeight = 250
+        photosTableView.prefetchDataSource = self
     }
     
     //MARK:- Bindings
@@ -38,35 +39,47 @@ class PhotosListViewController: UIViewController, UIScrollViewDelegate {
         photosTableView.rx.itemSelected
             .subscribe(onNext: { [weak self] index in
                 guard let self = self, ((index.row + 1) % 6 != 0) else { return }
-                self.navigateToPhotoDetails(index: index.row)
+                self.navigateToPhotoDetails(with: index.row)
             }).disposed(by: bag)
-
     }
     
     private func bindViewModel() {
-        viewModel.photosList
+        viewModel.photosListSubject
             .bind(to: photosTableView.rx.items) { (tableView, row, photoItem) in
                 let indexPath = IndexPath(row: row, section: 0)
                 if (row + 1) % 6 == 0 {
                     let cell = tableView.dequeueReusableCell(withIdentifier:AdPlaceholderCell.reuseIdentifier, for: indexPath) as! AdPlaceholderCell
                     return cell
-                }
-                else {
+                } else {
                     let cell = tableView.dequeueReusableCell(withIdentifier:PhotoTableViewCell.reuseIdentifier, for: indexPath) as! PhotoTableViewCell
                     cell.setupUiWithData(photoItem: photoItem)
                     return cell
                 }
             }.disposed(by: bag)
         
+        viewModel.error.subscribe(onNext: { [weak self] erro in
+            let alert = UIAlertController(title: "Alert", message: erro, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            self?.present(alert, animated: true, completion: nil)
+        }).disposed(by: bag)
+        
     }
     
-    private func navigateToPhotoDetails(index: Int) {
+    private func navigateToPhotoDetails(with index: Int) {
         guard let viewController = self.storyboard?.instantiateViewController(identifier: "PhotoDetailsViewController") as? PhotoDetailsViewController else { return }
-        let photoDetailsViewInfo = viewModel.getPhotoDetailsViewInfo(at: index)
-        let detailViewModel = PhotoDetailsViewModel(photoDetailsViewInfo: photoDetailsViewInfo)
+        guard let photo = try? viewModel.photosListSubject.value[index] else { return }
+        let photoDetailsInfoModel = PhotoDetailsViewInfo(authorName: photo.author, photoImageURL: URL(string: photo.downloadURL))
+        let detailViewModel = PhotoDetailsViewModel(photoDetailsViewInfo: photoDetailsInfoModel)
         viewController.viewModel = detailViewModel
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
+}
+
+extension PhotosListViewController: UITableViewDataSourcePrefetching {
+
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        viewModel.prefetchItemsAt(indexPaths: indexPaths)
+    }
 }
 
