@@ -19,6 +19,7 @@ class PhotosListViewController: UIViewController, UIScrollViewDelegate, Loadable
     override func viewDidLoad() {
         super.viewDidLoad()
         updateUI()
+        viewModel.fetchData()
     }
     
     private func updateUI() {

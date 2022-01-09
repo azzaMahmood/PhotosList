@@ -11,13 +11,12 @@ import RxRelay
 
 final class PhotosListViewModel {
     
-
-    // MARK: - private state
+    // MARK: - Properties
     private let disposeBag = DisposeBag()
-    var photosListSubject = BehaviorRelay<[Photo]>(value: [])
     private let photoListApi: NetworkManagerProtocol
     private var currentPage = 0
     private var page = Page()
+    var photosListSubject = BehaviorRelay<[Photo]>(value: [])
     
     // MARK: - Observers
     var showLoader = PublishSubject<Bool>()
@@ -26,7 +25,6 @@ final class PhotosListViewModel {
     // MARK: - Initialization
     init(photoListApi: NetworkManagerProtocol = NetworkManager()) {
         self.photoListApi = photoListApi
-        fetchData()
     }
 
     // MARK: - Network Call
@@ -36,12 +34,7 @@ final class PhotosListViewModel {
         photoListApi.sendRequest(endPoint: PhotosApi.getPhotosList(page: page.currentPage, count: page.countPerPage), decodingType: Photos.self)
             .subscribe(onNext: { [weak self] value in
                 guard let self = self else { return }
-                self.showLoader.onNext(false)
-                var items = try? self.photosListSubject.value
-                items?.append(contentsOf: value)
-                self.page.currentPage += 1
-                self.page.fetchedItemsCount += value.count
-                self.photosListSubject.accept(items ?? [])
+                self.handleApiResponse(value)
             }, onError: { [weak self] err in
                 guard let self = self else { return }
                 self.showLoader.onNext(false)
@@ -49,11 +42,17 @@ final class PhotosListViewModel {
             }).disposed(by: disposeBag)
     }
     
-    func getPhotoDetailsViewInfo(at index: Int) -> PhotoDetailsViewInfo {
-        let photos = photosListSubject.value
-        guard photos.isEmpty else { return .init(authorName: "", photoImageURL: nil) }
-        let photo = photos[index]
-        return PhotoDetailsViewInfo(authorName: photo.author, photoImageURL: URL(string: photo.downloadURL))
+    private func handleApiResponse(_ value: Photos) {
+        self.showLoader.onNext(false)
+        var items = try? self.photosListSubject.value
+        items?.append(contentsOf: value)
+        self.photosListSubject.accept(items ?? [])
+        self.handlePagination(count: value.count)
+    }
+    
+    private func handlePagination(count: Int) {
+        self.page.currentPage += 1
+        self.page.fetchedItemsCount += count
     }
     
     func prefetchItemsAt(indexPaths: [IndexPath]) {
@@ -62,5 +61,4 @@ final class PhotosListViewModel {
                 fetchData()
             }
         }
-
 }
