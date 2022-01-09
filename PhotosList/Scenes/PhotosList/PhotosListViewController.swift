@@ -18,6 +18,11 @@ class PhotosListViewController: UIViewController, UIScrollViewDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        updateUI()
+    }
+    
+    private func updateUI() {
+        title = "Photos"
         setupTableView()
         configureBinding()
         bindViewModel()

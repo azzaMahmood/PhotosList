@@ -17,19 +17,29 @@ class PhotoDetailsViewController: UIViewController, UIScrollViewDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupImageView()
-        setupScrollView()
-        setupViewBackgroundColor()
+        setupUI()
     }
     
     func initialize(with viewModel: PhotoDetailsViewModel) {
         self.viewModel = viewModel
+    }
+    
+    private func setupUI() {
+        setupImageView()
+        setupScrollView()
+        setupAuthorName()
+        setupViewBackgroundColor()
     }
     private func setupImageView() {
         photoImageView.layer.cornerRadius = 8
         photoImageView.clipsToBounds = true
         photoImageView.contentMode = .scaleAspectFit
         photoImageView.kf.setImage(with: viewModel.getPhotoDownloadURL())
+    }
+    
+    private func setupAuthorName() {
+        self.navigationController?.navigationBar.topItem?.title = ""
+        self.navigationItem.title = viewModel.getAuthorName()
     }
     
     private func setupScrollView() {
