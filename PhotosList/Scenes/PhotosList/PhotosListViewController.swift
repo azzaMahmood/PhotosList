@@ -9,7 +9,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class PhotosListViewController: UIViewController, UIScrollViewDelegate {
+class PhotosListViewController: UIViewController, UIScrollViewDelegate, Loadable {
 
     @IBOutlet weak var photosTableView: UITableView!
     
@@ -46,6 +46,12 @@ class PhotosListViewController: UIViewController, UIScrollViewDelegate {
                 guard let self = self, ((index.row + 1) % 6 != 0) else { return }
                 self.navigateToPhotoDetails(with: index.row)
             }).disposed(by: bag)
+        
+        viewModel.showLoader
+                    .asDriver(onErrorJustReturn: false)
+                    .drive(onNext: { [weak self]  in
+                        self?.showLoading(show: $0)
+                    }).disposed(by: bag)
     }
     
     private func bindViewModel() {
